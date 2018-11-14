@@ -35,6 +35,7 @@ bool Picker::postVisit(SgShapeNode& node) {
 
 	// TODO
 
+	return drawer_.visit(node);
 }
 
 shared_ptr<SgRbtNode> Picker::getRbtNodeAtXY(int x, int y) {

@@ -295,7 +295,6 @@ static bool applyM() {
 }
 
 static void drawStuff(const ShaderState& curSS, bool picking) {
-
    // build & send proj. matrix to vshader
    const Matrix4 projmat = makeProjectionMatrix();
    sendProjectionMatrix(curSS, projmat);

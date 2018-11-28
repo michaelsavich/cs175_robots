@@ -11,37 +11,36 @@ Picker::Picker(const RigTForm& initialRbt, const ShaderState& curSS)
   , srgbFrameBuffer_(false) {}
 
 bool Picker::visit(SgTransformNode& node) {
-
-	// TODO
-
+  nodeStack_.push_back(node.shared_from_this());
   return drawer_.visit(node);
 }
 
 bool Picker::postVisit(SgTransformNode& node) {
-
-	// TODO
-
+  nodeStack_.pop_back();
   return drawer_.postVisit(node);
 }
 
 bool Picker::visit(SgShapeNode& node) {
-
-	// TODO
-
+  int color = idCounter_++;
+  shared_ptr<SgNode> n =  nodeStack_.back();
+  shared_ptr<SgRbtNode> rn = dynamic_pointer_cast<SgRbtNode>(n);
+  if (rn != NULL) {
+    addToMap(color, rn);
+    Cvec3 vec = idToColor(color);
+    safe_glUniform3f(drawer_.getCurSS().h_uIdColor, vec[0], vec[1], vec[2]);
+  }
   return drawer_.visit(node);
 }
 
 bool Picker::postVisit(SgShapeNode& node) {
-
-	// TODO
-
 	return drawer_.visit(node);
 }
 
 shared_ptr<SgRbtNode> Picker::getRbtNodeAtXY(int x, int y) {
 
-	// TODO
+	void *pointerIsAFuck = NULL;
 
+	glReadPixels(x, y, 1, 1, GL_RGB, GL_INT, &pointerIsAFuck);
 	return shared_ptr<SgRbtNode>(); // return null for now
 }
 
@@ -88,3 +87,5 @@ int Picker::colorToId(const PackedPixel& p) {
   id |= ((p.b >> UNUSED_BITS) << (NBITS+NBITS));
   return id;
 }
+
+

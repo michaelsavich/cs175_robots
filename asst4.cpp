@@ -311,6 +311,8 @@ static void drawStuff(const ShaderState& curSS, bool picking) {
    safe_glUniform3f(curSS.h_uLight2, eyeLight2[0], eyeLight2[1], eyeLight2[2]);
 
    if (!picking) {
+	  assert(&curSS != (ShaderState *) &g_shaderStates[PICKING_SHADER]);
+
       Drawer drawer(invEyeRbt, curSS);
       g_world->accept(drawer);
 
@@ -333,6 +335,7 @@ static void drawStuff(const ShaderState& curSS, bool picking) {
       }
    }
    else {
+	  assert(&curSS == (ShaderState *) &g_shaderStates[PICKING_SHADER]);
       Picker picker(invEyeRbt, curSS);
       g_world->accept(picker);
       glFlush();

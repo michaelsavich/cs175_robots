@@ -21,7 +21,7 @@ bool Picker::postVisit(SgTransformNode& node) {
 }
 
 bool Picker::visit(SgShapeNode& node) {
-  int color = idCounter_++;
+  int color = ++idCounter_;
   shared_ptr<SgNode> n =  nodeStack_.back();
   shared_ptr<SgRbtNode> rn = dynamic_pointer_cast<SgRbtNode>(n);
   if (rn != NULL) {

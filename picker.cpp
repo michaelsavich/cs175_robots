@@ -96,6 +96,6 @@ PackedPixel glPixelAt(int x, int y) {
   unsigned char* ptr = new unsigned char[3];
   glReadPixels(x, y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, ptr);
   PackedPixel px = { ptr[0],ptr[1],ptr[2] };
-  delete ptr;
+  delete[] ptr;
   return px;
 }

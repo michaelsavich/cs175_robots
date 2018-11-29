@@ -36,16 +36,13 @@ bool Picker::postVisit(SgShapeNode& node) {
 	return drawer_.visit(node);
 }
 
-shared_ptr<SgRbtNode> Picker::getRbtNodeAtXY(int x, int y) {
-
-	void *pointerIsAFuck = NULL;
 /**
  * convenience function for glReadPixels
  */
 PackedPixel glPixelAt(int x, int y);
 
-	glReadPixels(x, y, 1, 1, GL_RGB, GL_INT, &pointerIsAFuck);
-	return shared_ptr<SgRbtNode>(); // return null for now
+shared_ptr<SgRbtNode> Picker::getRbtNodeAtXY(int x, int y) {
+	return idToRbtNode_[colorToId(glPixelAt(x,y))];
 }
 
 //------------------

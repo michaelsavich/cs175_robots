@@ -40,18 +40,21 @@ public:
     , found_(false) {}
 
   const RigTForm getAccumulatedRbt(int offsetFromStackTop = 0) {
+	  RigTForm accumulated = RigTForm::identity();
+	  for (vector<RigTForm>::iterator i = rbtStack_.begin();
+		   i != rbtStack_.end();
+		   i++) accumulated = accumulated * *i;
 
-	  // TODO
   }
 
   virtual bool visit(SgTransformNode& node) {
-
-	  // TODO
+	  rbtStack_.push_back(node.getRbt());
+	  found_ = node == target_;
+	  return !found_;
   }
 
   virtual bool postVisit(SgTransformNode& node) {
-
-	  // TODO
+	  rbtStack_.pop_back();
   }
 };
 

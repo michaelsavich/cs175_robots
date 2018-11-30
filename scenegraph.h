@@ -126,6 +126,10 @@ public:
     rbt_ = rbt;
   }
 
+  void applyRbt(const RigTForm& rbt) {
+	  rbt_ = rbt_ * rbt;
+  }
+
 private:
   RigTForm rbt_;
 };

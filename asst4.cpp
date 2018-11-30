@@ -301,7 +301,7 @@ static void drawStuff(const ShaderState& curSS, bool picking) {
 
 
    // use the skyRbt as the eyeRbt
-   const RigTForm eyeRbt = getEyeRbt();
+   const RigTForm eyeRbt = getPathAccumRbt(g_world,g_skyNode);
    const RigTForm invEyeRbt = inv(eyeRbt);
 
    const Cvec3 eyeLight1 = Cvec3(invEyeRbt * Cvec4(g_light1, 1)); // g_light1 position in eye coordinates

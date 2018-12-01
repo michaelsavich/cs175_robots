@@ -47,7 +47,7 @@ public:
 
   virtual bool visit(SgTransformNode& node) {
 	  RigTForm rbt = node.getRbt();
-	  if (!rbtStack_.empty()) rbtStack_.back() * rbt;
+	  if (!rbtStack_.empty()) rbt = rbtStack_.back() * rbt;
 	  rbtStack_.push_back(rbt);
 	  found_ = node == target_;
 	  return !found_;

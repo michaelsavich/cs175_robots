@@ -55,6 +55,7 @@ public:
 
   virtual bool postVisit(SgTransformNode& node) {
 	  rbtStack_.pop_back();
+	  return !found_;
   }
 };
 

@@ -423,8 +423,7 @@ static void motion(const int x, const int y) {
 
    if (g_mouseClickDown && applyM()) {
 
-	  // TODO
-	  // Working with g_currentPickedRbtNode, add code here to apply transformation m.
+	  g_currentPickedRbtNode->applyRbt(m);
 
       glutPostRedisplay(); // we always redraw if we changed the scene
    }

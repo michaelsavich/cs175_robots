@@ -235,10 +235,6 @@ inline RigTForm getArcballRbt() {
 		rbt = RigTForm::identity();
 	else
 		rbt = getPathAccumRbt(g_world, g_currentPickedRbtNode, 0);
-	cout << "starting transmission" << endl;
-	cout << rigTFormToMatrix(rbt).toString() << endl;
-    cout << rigTFormToMatrix(rbt).toString() << endl;
-	cout << "ceasing transmission" << endl;
 	return rbt;
 }
 
@@ -478,8 +474,10 @@ static void mouse(const int button, const int state, const int x, const int y) {
 
    g_mouseClickDown = g_mouseLClickButton || g_mouseRClickButton || g_mouseMClickButton;
 
-   if (g_picking && g_mouseLClickButton)
+   if (g_picking && g_mouseLClickButton) {
       pick();
+      g_picking = false;
+   }
 
    if (g_mouseLClickButton && useArcball())  // store arcball click coordinates
       g_arcballClick = findAbClick(g_mouseClickX, g_mouseClickY);
@@ -542,10 +540,6 @@ static void keyboard(const unsigned char key, const int x, const int y) {
    glutPostRedisplay();
 }
 
-static void keyboardUp(const unsigned char key, const int x, const int y) {
-	if (key == 'p') g_picking = false;
-}
-
 static void initGlutState(int argc, char * argv[]) {
    glutInit(&argc, argv);                                  // initialize Glut based on cmd-line args
    glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_DEPTH);  //  RGBA pixel channels and double buffering
@@ -557,7 +551,6 @@ static void initGlutState(int argc, char * argv[]) {
    glutMotionFunc(motion);                                 // mouse movement callback
    glutMouseFunc(mouse);                                   // mouse click callback
    glutKeyboardFunc(keyboard);
-   glutKeyboardUpFunc(keyboardUp);
 }
 
 static void initGLState() {

@@ -3,7 +3,7 @@
 
 #include <cassert>
 #include <cmath>
-
+#include <sstream>
 #include "cvec.h"
 
 // Forward declaration of Matrix4 and transpose since those are used below
@@ -216,6 +216,20 @@ public:
     r(3,2) = -1.0; // 4th row
     return r;
   }
+
+  std::string toString() {
+  	  std::ostringstream output;
+  	  output << '[';
+  	  for (int i=0; i<16; i++) {
+  		  output << d_[i];
+  		  if (i != 15) {
+  			  output << ',';
+  			  if ((i+1) % 4 == 0) output << '\n';
+  		  }
+  	  }
+  	  output << ']';
+  	  return output.str();
+    }
 
 };
 

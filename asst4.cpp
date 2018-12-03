@@ -230,10 +230,16 @@ inline RigTForm getEyeRbt()
 }
 
 inline RigTForm getArcballRbt() {
+	RigTForm rbt;
 	if (g_currentPickedRbtNode == g_skyNode && !g_skySkyFrame)
-		return RigTForm::identity();
+		rbt = RigTForm::identity();
 	else
-		return getPathAccumRbt(g_world, g_currentPickedRbtNode, 0);
+		rbt = getPathAccumRbt(g_world, g_currentPickedRbtNode, 0);
+	cout << "starting transmission" << endl;
+	cout << rigTFormToMatrix(rbt).toString() << endl;
+    cout << rigTFormToMatrix(rbt).toString() << endl;
+	cout << "ceasing transmission" << endl;
+	return rbt;
 }
 
 // return the normalized vector corresponding to the virtual click point

@@ -425,7 +425,10 @@ static void motion(const int x, const int y) {
 
    if (g_mouseClickDown && applyM()) {
 
-	  g_currentPickedRbtNode->applyRbt(m);
+	  RigTForm eyeRbt = getPathAccumRbt(g_world,g_skyNode,0);
+	  RigTForm auxFrame =
+	    inv(getPathAccumRbt(g_world,g_currentPickedRbtNode,1)) * makeMixedFrame(getPathAccumRbt(g_world,g_currentPickedRbtNode,0), eyeRbt);
+	  g_currentPickedRbtNode->applyRbt(auxFrame,m);
 
       glutPostRedisplay(); // we always redraw if we changed the scene
    }

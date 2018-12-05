@@ -222,11 +222,25 @@ static Matrix4 makeProjectionMatrix() {
                                   g_frustNear, g_frustFar);
 }
 
+
+RigTForm getWorldPathAccumRbt(
+		shared_ptr<SgTransformNode> destination,
+		int offsetFromDestination) {
+	return getPathAccumRbt(g_world,destination,offsetFromDestination);
+}
+
+shared_ptr<SgRbtNode> getEyeNode() {
+	switch (g_activeView) {
+		case G_SKY_CAM: return g_skyNode;
+		case G_ROBOT1: return g_robot1Node;
+	    case G_ROBOT2: return g_robot2Node;
+	}
+	assert(false);
+}
+
 inline RigTForm getEyeRbt()
 {
-	return g_skyNode->getRbt();
-
-   // TODO: Add code to implement view switching, using getPathAccumRbt().
+	return getWorldPathAccumRbt(getEyeNode(),0);
 }
 
 inline RigTForm getArcballRbt() {
@@ -303,7 +317,7 @@ static void drawStuff(const ShaderState& curSS, bool picking) {
 
 
    // use the skyRbt as the eyeRbt
-   const RigTForm eyeRbt = getPathAccumRbt(g_world,g_skyNode);
+   const RigTForm eyeRbt = getEyeRbt();
    const RigTForm invEyeRbt = inv(eyeRbt);
 
    const Cvec3 eyeLight1 = Cvec3(invEyeRbt * Cvec4(g_light1, 1)); // g_light1 position in eye coordinates
@@ -425,7 +439,7 @@ static void motion(const int x, const int y) {
 
    if (g_mouseClickDown && applyM()) {
 
-	  RigTForm eyeRbt = getPathAccumRbt(g_world,g_skyNode,0);
+	  RigTForm eyeRbt = getEyeRbt();
 	  RigTForm auxFrame =
 	    inv(getPathAccumRbt(g_world,g_currentPickedRbtNode,1)) * makeMixedFrame(getPathAccumRbt(g_world,g_currentPickedRbtNode,0), eyeRbt);
 	  g_currentPickedRbtNode->applyRbt(auxFrame,m);
